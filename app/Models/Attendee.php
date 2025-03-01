@@ -11,6 +11,10 @@ class Attendee extends Model
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'user_id',
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
