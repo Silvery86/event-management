@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  # Laravel application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mailpit
+
+  # Mailpit service
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    ports:
+      - "8025:8025"   # Web UI
+      - "1025:1025"   # SMTP Server
+    restart: always
