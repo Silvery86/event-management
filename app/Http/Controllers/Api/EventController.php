@@ -3,22 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 
+
 use App\Http\Resources\EventResource;
 use App\Http\Traits\CanLoadRelationship;
 use App\Models\Event;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
-    use CanLoadRelationship;
+    use CanLoadRelationship, AuthorizesRequests;
 
     private array $relations = ['user', 'attendees', 'attendees.user'];
 
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except(['index', 'show']);
+        $this->authorizeResource(Event::class,'event');
     }
     /**
      * Display a listing of the resource.
@@ -61,9 +64,9 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        if (Gate::denies('update-event', $event)) {
-            abort(403, 'You are not allowed to update this event');
-        }
+        // if (Gate::denies('update-event', $event)) {
+        //     abort(403, 'You are not allowed to update this event');
+        // }
 
         $event->update(
             $request->validate([
