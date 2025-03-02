@@ -21,7 +21,7 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except(['index', 'show']);
-        $this->middleware('throttle:api')->only(['store','update','destroy']);
+        $this->middleware('throttle:api')->only(['store','update','destroy','show']);
         $this->authorizeResource(Event::class,'event');
     }
     /**
